@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nomaditsu — built with Hermes</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(120% 120% at 50% 0%, #11161f 0%, #05070b 70%);
+      color: #c7d0db;
+      text-align: center;
+      padding: 2rem;
+    }
+    .card {
+      max-width: 32rem;
+      border: 1px solid #1d2733;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      background: rgba(255,255,255,0.02);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .mark { font-size: 2.4rem; color: #6ea8fe; line-height: 1; }
+    h1 { font-size: 1.6rem; font-weight: 600; color: #e8eef6; margin: 0.8rem 0 0.4rem; }
+    p { font-size: 0.98rem; line-height: 1.6; color: #93a1b3; }
+    .tag {
+      display: inline-block; margin-top: 1.2rem;
+      font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase;
+      color: #6ea8fe; border: 1px solid #243247; border-radius: 999px; padding: 0.3rem 0.8rem;
+    }
+    footer { margin-top: 1.6rem; font-size: 0.78rem; color: #5b6776; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="mark">&#9765;</div>
+    <h1>Nomaditsu</h1>
+    <p>A free GitHub Pages site, deployed via the <code>gh</code> CLI. This is the seed — a foundation for an upcoming experimental WebGL / shader single-page experience.</p>
+    <span class="tag">static &middot; no backend &middot; Hermes-built</span>
+    <footer id="stamp">initializing&hellip;</footer>
+  </main>
+  <script>
+    const el = document.getElementById('stamp');
+    const update = () => { el.textContent = 'live at ' + new Date().toLocaleString(); };
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
