@@ -1,2 +1,0 @@
-# This file tells GitHub Pages to skip the Jekyll build step.
-# It lets us serve raw static files and arbitrary asset folders (needed later for a heavy WebGL/shader build).

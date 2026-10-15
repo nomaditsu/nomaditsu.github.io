@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; frame-src 'self' about: data:; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>LinkParty admin</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<noscript><p class="noscript">The admin needs JavaScript. Nothing is sent anywhere except GitHub.</p></noscript>
+
+<header class="bar">
+  <h1>LinkParty</h1>
+  <span id="status" class="status" role="status" aria-live="polite"></span>
+  <span class="spacer"></span>
+  <button id="btn-undo" class="btn" type="button" title="Undo (Ctrl/Cmd+Z)" disabled>Undo</button>
+  <button id="btn-redo" class="btn" type="button" title="Redo (Ctrl/Cmd+Shift+Z)" disabled>Redo</button>
+  <button id="btn-settings" class="btn" type="button">Settings</button>
+  <button id="btn-save" class="btn primary" type="button" disabled>Save</button>
+</header>
+
+<div id="banner" class="banner" hidden></div>
+
+<div class="layout">
+  <main class="editor">
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" class="tab" id="tab-links" data-tab="links" aria-selected="true" aria-controls="panel-links">Links</button>
+      <button role="tab" class="tab" id="tab-profile" data-tab="profile" aria-selected="false" aria-controls="panel-profile">Profile</button>
+      <button role="tab" class="tab" id="tab-theme" data-tab="theme" aria-selected="false" aria-controls="panel-theme">Appearance</button>
+      <button role="tab" class="tab" id="tab-archive" data-tab="archive" aria-selected="false" aria-controls="panel-archive">Archive <span id="archive-count" class="count"></span></button>
+      <button role="tab" class="tab only-narrow" id="tab-preview" data-tab="preview" aria-selected="false" aria-controls="panel-preview">Preview</button>
+    </div>
+
+    <section id="panel-links" class="panel" role="tabpanel" aria-labelledby="tab-links">
+      <div class="toolbar">
+        <button id="add-link" class="btn" type="button">+ Link</button>
+        <button id="add-section" class="btn" type="button">+ Section</button>
+        <button id="toggle-all" class="btn quiet" type="button">Collapse all</button>
+      </div>
+      <ul id="items" class="rows" aria-label="Links and sections"></ul>
+    </section>
+
+    <section id="panel-profile" class="panel" role="tabpanel" aria-labelledby="tab-profile" hidden></section>
+    <section id="panel-theme" class="panel" role="tabpanel" aria-labelledby="tab-theme" hidden></section>
+    <section id="panel-archive" class="panel" role="tabpanel" aria-labelledby="tab-archive" hidden></section>
+
+    <section id="panel-preview" class="panel only-narrow" role="tabpanel" aria-labelledby="tab-preview" hidden>
+      <div class="preview-slot"></div>
+    </section>
+  </main>
+
+  <aside class="preview" id="preview-aside" aria-label="Live preview">
+    <div class="preview-head">
+      <span>Preview</span>
+      <span class="spacer"></span>
+      <label class="sr-only" for="preview-mode">Preview color mode</label>
+      <select id="preview-mode" class="select-sm">
+        <option value="">Site setting</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+    <div class="phone"><iframe id="preview" title="Live preview of your page" sandbox="allow-popups allow-popups-to-escape-sandbox"></iframe></div>
+  </aside>
+</div>
+
+<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+
+<dialog id="dlg-settings" class="dlg" aria-labelledby="settings-title">
+  <form method="dialog" id="settings-form">
+    <h2 id="settings-title">GitHub connection</h2>
+    <p class="warn">Use a <strong>fine-grained personal access token</strong> scoped to <strong>this one repository</strong> with only <strong>Contents: Read and write</strong>. Nothing else. The token stays in this browser and is only ever sent to api.github.com. Other pages on this same domain can read it, so only host pages you trust here, and use the passphrase.
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create a token</a></p>
+    <div class="grid2">
+      <label>Owner<input id="set-owner" autocomplete="off" spellcheck="false"></label>
+      <label>Repository<input id="set-repo" autocomplete="off" spellcheck="false"></label>
+    </div>
+    <label>Branch<input id="set-branch" autocomplete="off" spellcheck="false"></label>
+    <label>Token
+      <input id="set-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+    </label>
+    <label class="check"><input id="set-encrypt" type="checkbox"> Encrypt the token with a passphrase (asked once per browser session)</label>
+    <label id="set-pass-wrap" hidden>Passphrase<input id="set-pass" type="password" autocomplete="new-password"></label>
+    <p id="settings-msg" class="msg" role="status" aria-live="polite"></p>
+    <div class="dlg-actions">
+      <button type="button" class="btn quiet" id="set-export">Download links.json</button>
+      <label class="btn quiet file">Import links.json<input id="set-import" type="file" accept="application/json,.json" hidden></label>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="set-test">Test connection</button>
+      <button type="button" class="btn danger" id="set-clear">Forget token</button>
+      <button type="button" class="btn" id="set-cancel">Close</button>
+      <button type="submit" class="btn primary" id="set-save" value="save">Save settings</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-unlock" class="dlg narrow" aria-labelledby="unlock-title">
+  <form method="dialog" id="unlock-form">
+    <h2 id="unlock-title">Unlock token</h2>
+    <label>Passphrase<input id="unlock-pass" type="password" autocomplete="current-password"></label>
+    <p id="unlock-msg" class="msg" role="alert"></p>
+    <div class="dlg-actions">
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="unlock-skip">Read only</button>
+      <button type="submit" class="btn primary" value="ok">Unlock</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-conflict" class="dlg narrow" aria-labelledby="conflict-title">
+  <form method="dialog">
+    <h2 id="conflict-title">The site changed on GitHub</h2>
+    <p>Another device or edit updated the site since you loaded it. Pick one:</p>
+    <div class="dlg-actions col">
+      <button type="submit" class="btn" value="reload">Reload from GitHub (discard my unsaved changes)</button>
+      <button type="submit" class="btn danger" value="overwrite">Save mine anyway (overwrite their changes)</button>
+      <button type="submit" class="btn quiet" value="cancel">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>

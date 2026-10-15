@@ -1,0 +1,391 @@
+{
+  "version": 1,
+  "profile": {
+    "name": "Nomaditsu",
+    "bio": "Ray de Guzman. Hacking minds with AI x Psychology | AI Music • AI Art • AI Tutorials | 🇨🇦 BKK Digital Nomad",
+    "avatar": "assets/avatar.jpg",
+    "title": "Nomaditsu Official: TikTok, Instagram, X, Facebook",
+    "description": "Ray de Guzman (Nomaditsu) hacks minds with AI x Psychology. AI music, AI art and AI tutorials from a Canadian digital nomad in Bangkok.",
+    "url": "https://nomaditsu.github.io/"
+  },
+  "theme": {
+    "preset": "classic",
+    "mode": "auto",
+    "accent": "",
+    "buttonShape": "soft",
+    "buttonStyle": "filled",
+    "background": "solid",
+    "font": "sans"
+  },
+  "header": [
+    {
+      "id": "hdr-email",
+      "type": "icon-link",
+      "icon": "mail",
+      "label": "Email",
+      "url": "mailto:nomaditsu@gmail.com",
+      "enabled": true
+    },
+    {
+      "id": "hdr-youtube",
+      "type": "icon-link",
+      "icon": "brand-youtube",
+      "label": "YouTube",
+      "url": "https://www.youtube.com/channel/UCOVA17GV3c-0Pfi0chUyEQw",
+      "enabled": true
+    },
+    {
+      "id": "hdr-instagram",
+      "type": "icon-link",
+      "icon": "brand-instagram",
+      "label": "Instagram",
+      "url": "https://www.instagram.com/nomaditsu",
+      "enabled": true
+    },
+    {
+      "id": "hdr-linkedin",
+      "type": "icon-link",
+      "icon": "brand-linkedin",
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/raydeguzman",
+      "enabled": true
+    },
+    {
+      "id": "hdr-x",
+      "type": "icon-link",
+      "icon": "brand-x",
+      "label": "X",
+      "url": "https://x.com/nomaditsu",
+      "enabled": true
+    },
+    {
+      "id": "hdr-facebook",
+      "type": "icon-link",
+      "icon": "brand-facebook",
+      "label": "Facebook",
+      "url": "https://www.facebook.com/nomaditsu",
+      "enabled": true
+    },
+    {
+      "id": "hdr-website",
+      "type": "icon-link",
+      "icon": "world",
+      "label": "Website",
+      "url": "https://nomaditsu.com",
+      "enabled": true
+    }
+  ],
+  "items": [
+    {
+      "id": "sec-latest-features",
+      "type": "header",
+      "title": "Latest Features",
+      "enabled": true
+    },
+    {
+      "id": "lnk-7-eleven",
+      "type": "link",
+      "title": "11 SEVEN (7 Eleven Simulator) by Nomaditsu",
+      "url": "https://7.nomaditsu.com",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/7-eleven.jpg",
+      "description": "7 Eleven Simulator by Nomaditsu — walk into a Bangkok 11 SEVEN, browse 250+ Thai products, and flip every sign and package between English and Thai."
+    },
+    {
+      "id": "lnk-cutparty",
+      "type": "link",
+      "title": "🎉 CutParty — the pre-editor for Mac",
+      "url": "https://cutparty.com",
+      "enabled": true,
+      "description": "The pre-editor for Mac. CutParty gets your footage clean — silences cut, noise gone, loudness leveled, color graded — production-ready for your editor, or ready to publish in one shot."
+    },
+    {
+      "id": "sec-featured-music",
+      "type": "header",
+      "title": "Featured Music",
+      "enabled": true
+    },
+    {
+      "id": "lnk-mind-set-album",
+      "type": "link",
+      "title": "World's first album that transforms mindsets [Mind Set: Bangers of Belief]",
+      "url": "https://youtube.com/playlist?list=PLMZl7x-grnhoGHvBWmbv1su4ZYK5uc7uA&si=4mVYMAL5cG7ci22e",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/album-mind-set.jpg",
+      "featured": true
+    },
+    {
+      "id": "lnk-youtube-music",
+      "type": "link",
+      "title": "Nomaditsu on YouTube Music",
+      "url": "https://music.youtube.com/channel/UCOVA17GV3c-0Pfi0chUyEQw",
+      "enabled": true,
+      "icon": "brand-youtube"
+    },
+    {
+      "id": "lnk-spotify",
+      "type": "link",
+      "title": "Nomaditsu on Spotify",
+      "url": "https://open.spotify.com/artist/3PJNVn49oyIt3K6v1VIeI1",
+      "enabled": true,
+      "icon": "brand-spotify"
+    },
+    {
+      "id": "lnk-apple-music",
+      "type": "link",
+      "title": "Nomaditsu on Apple Music",
+      "url": "https://music.apple.com/us/artist/nomaditsu/1762580236",
+      "enabled": true,
+      "icon": "brand-apple"
+    },
+    {
+      "id": "sec-featured-youtube",
+      "type": "header",
+      "title": "Featured YouTube",
+      "enabled": true
+    },
+    {
+      "id": "lnk-yt-distrokid",
+      "type": "link",
+      "title": "How to Distribute AI Music: My Full DistroKid Process (Suno to Spotify) 2026",
+      "url": "https://youtu.be/JtLsc-iIV2U?si=yDtY3pEB1r8xdhyp",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/yt-distrokid-ai-music.jpg"
+    },
+    {
+      "id": "lnk-yt-voice-chat",
+      "type": "link",
+      "title": "FREE AI Voice Chat better than ChatGPT?",
+      "url": "https://youtu.be/h2wUK7jBGls?si=BL24YRlsIgENLrZt",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/yt-free-ai-voice-chat.jpg"
+    },
+    {
+      "id": "lnk-yt-deepseek",
+      "type": "link",
+      "title": "DeepSeek R1: $5000 vs $1000 Computer",
+      "url": "https://youtu.be/EHGmPn6RVwU?si=3jcofklJ9vdR8G-g",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/yt-deepseek-r1.jpg"
+    },
+    {
+      "id": "lnk-yt-subscribe",
+      "type": "link",
+      "title": "Subscribe to my YouTube Channel",
+      "url": "http://youtube.com/@nomaditsu?sub_confirmation=1",
+      "enabled": true,
+      "icon": "brand-youtube"
+    },
+    {
+      "id": "sec-featured-articles",
+      "type": "header",
+      "title": "Featured Articles",
+      "enabled": true
+    },
+    {
+      "id": "lnk-art-song-software",
+      "type": "link",
+      "title": "MIND SET: What If a Song Could Be Software for Your Mind?",
+      "url": "https://nomaditsu.com/blogs/journal/song-software-mind-ai-music-personal-development",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/article-song-software-for-your-mind.jpg"
+    },
+    {
+      "id": "lnk-art-reclaiming-power",
+      "type": "link",
+      "title": "The Psychology of Reclaiming Your Power Through Music",
+      "url": "https://nomaditsu.com/blogs/journal/the-psychology-of-reclaiming-your-power-through-music",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/article-reclaiming-your-power.jpg"
+    },
+    {
+      "id": "lnk-art-digital-nomadism",
+      "type": "link",
+      "title": "The New Digital Nomadism",
+      "url": "https://nomaditsu.com/blogs/journal/new-digital-nomadism-finding-home-wherever-you-are",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/article-new-digital-nomadism.jpg"
+    },
+    {
+      "id": "lnk-art-conversational-publishing",
+      "type": "link",
+      "title": "Conversational Publishing: How Codex and Claude Built My MCP Pipeline",
+      "url": "https://nomaditsu.com/blogs/journal/conversational-publishing-mcp-pipeline",
+      "enabled": true
+    },
+    {
+      "id": "lnk-explore-site",
+      "type": "link",
+      "title": "Explore my world at Nomaditsu.com",
+      "url": "https://nomaditsu.com",
+      "enabled": true,
+      "icon": "app-window"
+    },
+    {
+      "id": "sec-deals",
+      "type": "header",
+      "title": "Deals & Discounts",
+      "enabled": true,
+      "footnote": "Some of these are referral or affiliate links. I may earn a credit or commission at no extra cost to you."
+    },
+    {
+      "id": "lnk-distrokid",
+      "type": "link",
+      "title": "Distrokid Discount - Save 7% with my link!",
+      "url": "https://distrokid.com/vip/seven/7655708",
+      "enabled": true
+    },
+    {
+      "id": "lnk-kraken",
+      "type": "link",
+      "title": "Kraken Trading - Get $75!",
+      "url": "https://proinvite.kraken.com/9f1e/l4ousd2p",
+      "enabled": true,
+      "icon": "coin"
+    },
+    {
+      "id": "lnk-kling",
+      "type": "link",
+      "title": "Kling AI - Get 50% bonus credits",
+      "url": "https://pro.klingai.com/h5-app/invitation?code=7BKCRETBZVBV",
+      "enabled": true
+    },
+    {
+      "id": "lnk-wise",
+      "type": "link",
+      "title": "Wise Card - Zero fees on your first transfer!*",
+      "url": "https://wise.com/invite/ahpc/raymondd554",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/wise-card.jpg"
+    },
+    {
+      "id": "sec-dance-project",
+      "type": "header",
+      "title": "Dance Project [Archived]",
+      "enabled": true
+    },
+    {
+      "id": "lnk-dancevocab-instagram",
+      "type": "link",
+      "title": "Dance Vocab - Instagram",
+      "url": "https://www.instagram.com/dancevocab",
+      "enabled": true,
+      "icon": "brand-instagram"
+    },
+    {
+      "id": "lnk-dancevocab-youtube",
+      "type": "link",
+      "title": "Dance Vocab - YouTube",
+      "url": "https://youtube.com/@dancevocab?si=OvOR5tVxQWl0ONOU&sub_confirmation=1",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/dance-vocab-youtube.jpg"
+    },
+    {
+      "id": "sec-shop",
+      "type": "header",
+      "title": "Shop",
+      "enabled": true
+    },
+    {
+      "id": "lnk-merch",
+      "type": "link",
+      "title": "Merch",
+      "url": "https://nomaditsu.threadless.com",
+      "enabled": true,
+      "icon": "shirt"
+    },
+    {
+      "id": "sec-follow",
+      "type": "header",
+      "title": "Follow",
+      "enabled": true
+    },
+    {
+      "id": "lnk-follow-instagram",
+      "type": "link",
+      "title": "Instagram",
+      "url": "https://www.instagram.com/nomaditsu",
+      "enabled": true,
+      "icon": "brand-instagram"
+    },
+    {
+      "id": "lnk-follow-twitter",
+      "type": "link",
+      "title": "Twitter",
+      "url": "https://x.com/nomaditsu",
+      "enabled": true,
+      "icon": "brand-twitter"
+    },
+    {
+      "id": "lnk-follow-linkedin",
+      "type": "link",
+      "title": "LinkedIn",
+      "url": "https://www.linkedin.com/in/raydeguzman",
+      "enabled": true,
+      "icon": "brand-linkedin"
+    },
+    {
+      "id": "lnk-follow-github",
+      "type": "link",
+      "title": "Github",
+      "url": "https://github.com/nomaditsu",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/github.jpg"
+    },
+    {
+      "id": "lnk-follow-tiktok",
+      "type": "link",
+      "title": "TikTok",
+      "url": "https://tiktok.com/@nomaditsu",
+      "enabled": true,
+      "icon": "brand-tiktok"
+    },
+    {
+      "id": "lnk-follow-sora",
+      "type": "link",
+      "title": "Sora",
+      "url": "https://sora.chatgpt.com/profile/nomaditsu",
+      "enabled": true,
+      "thumbnail": "assets/thumbs/sora.jpg"
+    },
+    {
+      "id": "lnk-follow-suno",
+      "type": "link",
+      "title": "Suno",
+      "url": "https://suno.com/@nomaditsu",
+      "enabled": true,
+      "icon": "world"
+    },
+    {
+      "id": "lnk-follow-newsletter",
+      "type": "link",
+      "title": "Newsletter",
+      "url": "http://nomaditsu.gumroad.com",
+      "enabled": true,
+      "icon": "mail"
+    },
+    {
+      "id": "sec-support",
+      "type": "header",
+      "title": "Support",
+      "enabled": true
+    },
+    {
+      "id": "lnk-paypal",
+      "type": "link",
+      "title": "PayPal",
+      "url": "https://paypal.me/raydg",
+      "enabled": true,
+      "icon": "brand-paypal"
+    },
+    {
+      "id": "lnk-buy-me-a-coffee",
+      "type": "link",
+      "title": "Buy Me A Coffee",
+      "url": "https://buymeacoffee.com/nomaditsu",
+      "enabled": true,
+      "icon": "coffee"
+    }
+  ],
+  "sites": []
+}
