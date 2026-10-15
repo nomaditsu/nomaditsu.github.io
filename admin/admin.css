@@ -152,3 +152,6 @@ a{color:var(--accent)}
 
 input[aria-invalid=true]{border-color:var(--danger)}
 .row-add{list-style:none}
+[hidden]{display:none!important}
+.btn.signout{background:var(--danger);border-color:var(--danger)}
+#dlg-settings.signin .adv{display:none}
