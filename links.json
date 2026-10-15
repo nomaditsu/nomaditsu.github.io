@@ -10,7 +10,7 @@
   },
   "theme": {
     "preset": "classic",
-    "mode": "light",
+    "mode": "dark",
     "accent": "",
     "buttonShape": "rounded",
     "buttonStyle": "filled",
@@ -83,14 +83,6 @@
       "enabled": true
     },
     {
-      "id": "lnk-cutparty",
-      "type": "link",
-      "title": "🎉 CutParty — the pre-editor for Mac",
-      "url": "https://cutparty.com",
-      "enabled": true,
-      "description": "The pre-editor for Mac. CutParty gets your footage clean — silences cut, noise gone, loudness leveled, color graded — production-ready for your editor, or ready to publish in one shot."
-    },
-    {
       "id": "lnk-7-eleven",
       "type": "link",
       "title": "11 SEVEN (7 Eleven Simulator) by Nomaditsu",
@@ -98,6 +90,14 @@
       "enabled": true,
       "thumbnail": "assets/thumbs/7-eleven.jpg",
       "description": "7 Eleven Simulator by Nomaditsu — walk into a Bangkok 11 SEVEN, browse 250+ Thai products, and flip every sign and package between English and Thai."
+    },
+    {
+      "id": "lnk-cutparty",
+      "type": "link",
+      "title": "🎉 CutParty — the pre-editor for Mac",
+      "url": "https://cutparty.com",
+      "enabled": true,
+      "description": "The pre-editor for Mac. CutParty gets your footage clean — silences cut, noise gone, loudness leveled, color graded — production-ready for your editor, or ready to publish in one shot."
     },
     {
       "id": "sec-featured-music",
