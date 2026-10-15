@@ -10,9 +10,9 @@
   },
   "theme": {
     "preset": "classic",
-    "mode": "auto",
+    "mode": "light",
     "accent": "",
-    "buttonShape": "soft",
+    "buttonShape": "rounded",
     "buttonStyle": "filled",
     "background": "solid",
     "font": "sans"
