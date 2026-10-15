@@ -85,7 +85,7 @@
     <label><span id="set-token-label">Token</span>
       <input id="set-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
     </label>
-    <label class="check"><input id="set-encrypt" type="checkbox"> <span id="set-encrypt-text">Encrypt the token with a passphrase (asked once per browser session)</span></label>
+    <label class="check"><input id="set-encrypt" type="checkbox"> <span id="set-encrypt-text">Add a lock: encrypt the token with a passphrase</span></label>
     <label id="set-pass-wrap" hidden>Passphrase<input id="set-pass" type="password" autocomplete="new-password"></label>
     <p id="settings-msg" class="msg" role="status" aria-live="polite"></p>
     <div class="dlg-actions">
@@ -93,7 +93,7 @@
       <label class="btn quiet file adv">Import links.json<input id="set-import" type="file" accept="application/json,.json" hidden></label>
       <span class="spacer"></span>
       <button type="button" class="btn adv" id="set-test">Test connection</button>
-      <button type="button" class="btn danger adv" id="set-clear">Forget token</button>
+      <button type="button" class="btn danger adv" id="set-signout" title="Forget the token in this browser">Sign out</button>
       <button type="button" class="btn" id="set-cancel">Close</button>
       <button type="submit" class="btn primary" id="set-save" value="save">Save settings</button>
     </div>
@@ -102,11 +102,12 @@
 
 <dialog id="dlg-unlock" class="dlg narrow" aria-labelledby="unlock-title">
   <form method="dialog" id="unlock-form">
-    <h2 id="unlock-title">Sign in</h2>
-    <label>Password<input id="unlock-pass" type="password" autocomplete="current-password"></label>
+    <h2 id="unlock-title">Unlock</h2>
+    <label>Passphrase<input id="unlock-pass" type="password" autocomplete="current-password"></label>
     <p id="unlock-msg" class="msg" role="alert"></p>
     <div class="dlg-actions">
       <span class="spacer"></span>
+      <button type="button" class="btn quiet" id="unlock-forget" title="Remove the saved token from this browser">Forget token</button>
       <button type="button" class="btn" id="unlock-cancel">Cancel</button>
       <button type="submit" class="btn primary" value="ok">Unlock</button>
     </div>

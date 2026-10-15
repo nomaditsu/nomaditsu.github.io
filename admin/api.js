@@ -76,7 +76,7 @@ export async function unlock(settings, passphrase) {
   try {
     return await decryptToken(settings.tokenEnc, passphrase);
   } catch {
-    throw new GhError('auth', 'Wrong password.');
+    throw new GhError('auth', 'Wrong passphrase.');
   }
 }
 

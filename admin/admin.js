@@ -35,6 +35,7 @@ const S = {
     previewMode: '',
     readOnly: true,
     demo: true,
+    locked: false,
     token: '',
     errors: [],
     saving: false,
@@ -66,6 +67,7 @@ function refs(data) {
 /* ---------- mutation, undo, status ---------- */
 
 function mutate(fn, { key = '', render = true } = {}) {
+  if (S.ui.locked) { blockedByLock(); return; }
   const now = Date.now();
   const sameBurst = key && S.coalesce.key === key && now - S.coalesce.t < 1500;
   if (!sameBurst) {
@@ -103,7 +105,8 @@ function setStatus(kind, text) {
 function updateChrome() {
   const dirty = isDirty();
   if (!S.ui.saving) {
-    if (S.ui.demo) setStatus('', dirty ? 'Demo: edits stay in this tab' : 'Demo: nothing is saved');
+    if (S.ui.locked) setStatus('err', 'Locked: unlock to make changes');
+    else if (S.ui.demo) setStatus('', dirty ? 'Demo: edits stay in this tab' : 'Demo: nothing is saved');
     else if (S.ui.readOnly) setStatus('err', dirty ? 'Unsaved changes (read only)' : 'Read only: GitHub could not be reached');
     else setStatus(dirty ? 'dirty' : '', dirty ? 'Unsaved changes' : 'All changes saved');
   }
@@ -481,6 +484,7 @@ filePick.addEventListener('change', async () => {
   const file = filePick.files && filePick.files[0];
   if (!file || !pickTarget) return;
   const t = pickTarget;
+  if (S.ui.locked) { blockedByLock(); return; }
   try {
     if (t.kind === 'avatar') {
       const img = await processImage(file, { max: 512, square: true });
@@ -759,6 +763,7 @@ async function save({ overwrite = false } = {}) {
     toast(`Fix ${blocking.length} problem${blocking.length > 1 ? 's' : ''} before saving.`, { kind: 'err' });
     return;
   }
+  if (S.ui.locked) { blockedByLock(); return; }
   if (S.ui.demo) { toast('Demo mode: sign in to save.'); return; }
   if (!S.ui.token) { openSettings('Add your GitHub token to save.'); return; }
   if (S.ui.readOnly) {
@@ -839,7 +844,7 @@ function openSettings(message = '', { signin = false } = {}) {
   dlg.classList.toggle('signin', signin);
   $('#settings-title').textContent = signin ? 'Sign in' : 'GitHub connection';
   $('#set-token-label').textContent = signin ? 'Password' : 'Token';
-  $('#set-encrypt-text').textContent = signin ? 'Lock with a passphrase (asked on each visit)' : 'Encrypt the token with a passphrase (asked once per browser session)';
+  $('#set-encrypt-text').textContent = signin ? 'Add a lock (ask for a passphrase each time this page opens)' : 'Add a lock: encrypt the token with a passphrase';
   $('#set-save').textContent = signin ? 'Sign in' : 'Save settings';
   $('#set-cancel').textContent = signin ? 'Cancel' : 'Close';
   $('#set-owner').value = s.owner;
@@ -884,7 +889,7 @@ async function saveSettings(ev) {
   const pass = $('#set-pass').value;
   const signingIn = S.ui.demo;
   if (signingIn && !token) { setSettingsMsg('Enter your password.', 'err'); return; }
-  if (encrypt && token && !pass) { setSettingsMsg(signingIn ? 'Enter a passphrase to lock it.' : 'Enter a passphrase to encrypt the token.', 'err'); return; }
+  if (encrypt && token && !pass) { setSettingsMsg('Enter a passphrase for the lock.', 'err'); return; }
   if (token && !/^(github_pat_|ghp_)/.test(token)) {
     setSettingsMsg(signingIn ? 'That password did not work.' : 'That does not look like a GitHub token (expected github_pat_…).', 'err');
     return;
@@ -950,7 +955,8 @@ async function loadFromBestSource() {
       });
     }
   } else {
-    banner('Demo mode: edit anything, nothing is saved or sent anywhere. Reload to reset.');
+    if (S.ui.locked) banner('Locked. Unlock with your passphrase to make changes.', { actions: [{ label: 'Unlock', fn: () => signIn() }] });
+    else banner('Demo mode: edit anything, nothing is saved or sent anywhere. Reload to reset.');
   }
   S.ui.readOnly = true;
   try {
@@ -976,16 +982,24 @@ function askPassphrase(settings) {
       done = true;
       form.removeEventListener('submit', onSubmit);
       cancel.removeEventListener('click', onCancel);
+      $('#unlock-forget').removeEventListener('click', onForget);
       if (dlg.open) dlg.close();
       resolve(token);
     };
     const onCancel = () => finish('');
+    const forget = $('#unlock-forget');
+    const onForget = () => {
+      if (!window.confirm('Remove the saved token from this browser? You will need to paste it again to sign in.')) return;
+      clearToken();
+      finish('');
+    };
     const onSubmit = async (e) => {
       e.preventDefault();
       try { finish(await unlock(settings, input.value)); } catch (err) { msg.textContent = err.message; }
     };
     form.addEventListener('submit', onSubmit);
     cancel.addEventListener('click', onCancel);
+    forget.addEventListener('click', onForget);
     dlg.addEventListener('close', onCancel, { once: true });
     dlg.showModal();
     input.focus();
@@ -993,31 +1007,59 @@ function askPassphrase(settings) {
 }
 
 // Demo mode (no token): the editor on the published links.json, no GitHub request, nothing persisted.
+// Locked = demo plus a saved encrypted token: the page looks the same, but any attempt to change
+// something opens the unlock prompt instead, so nobody invests time in edits that cannot be saved.
 // Settings (and the full GitHub dialog) only appear after signing in.
 function setDemo(demo) {
   S.ui.demo = demo;
+  S.ui.locked = demo && Boolean(readSettings().tokenEnc);
   $('#btn-save').hidden = demo;
   $('#btn-settings').hidden = demo;
   $('#tab-archive').hidden = demo;
   const auth = $('#btn-auth');
-  auth.textContent = demo ? 'Sign in' : 'Sign out';
-  auth.className = demo ? 'btn primary' : 'btn primary signout';
+  auth.textContent = !demo ? 'Lock' : S.ui.locked ? 'Unlock' : 'Sign in';
+  auth.className = demo ? 'btn primary' : 'btn';
   if (demo && S.ui.tab === 'archive') { S.ui.tab = 'links'; applyTab(); }
 }
 
+// Sign in (enter the password = token) or, when a lock exists, unlock it with the passphrase.
 async function signIn() {
+  if (S.ui.unlocking) return;
   const s = readSettings();
   if (!s.tokenEnc) { openSettings('', { signin: true }); return; }
-  const token = await askPassphrase(s);
-  if (!token) return;
+  S.ui.unlocking = true;
+  let token = '';
+  try { token = await askPassphrase(s); } finally { S.ui.unlocking = false; }
+  if (!token) { setDemo(true); updateChrome(); return; }
   S.ui.token = token;
   setDemo(false);
   await loadFromBestSource();
 }
 
+// An attempted change while locked: put the page back as it was and ask for the passphrase.
+function blockedByLock() {
+  afterChange(true);
+  signIn();
+}
+
+// Lock: drop the unlocked token, keep the encrypted copy. With no lock yet, offer to add one.
+async function lock() {
+  if (!readSettings().tokenEnc) {
+    openSettings('Add a lock below, then Save settings, to require a passphrase.');
+    $('#set-encrypt').focus();
+    return;
+  }
+  if (isDirty() && !window.confirm('Lock and discard unsaved changes?')) return;
+  S.ui.token = '';
+  setDemo(true);
+  await loadFromBestSource();
+  toast('Locked. Making changes will require your passphrase.', { ms: 6000 });
+}
+
+// Sign out: forget the token (plain or encrypted) in this browser.
 function signOut() {
   if (isDirty() && !window.confirm('Sign out and discard unsaved changes?')) return;
-  clearToken(); // the saved token (plain or encrypted) is removed from this browser
+  clearToken();
   location.reload();
 }
 
@@ -1084,23 +1126,14 @@ $('#btn-undo').addEventListener('click', () => restore(S.undo, S.redo));
 $('#btn-redo').addEventListener('click', () => restore(S.redo, S.undo));
 $('#btn-settings').innerHTML = ico('settings');
 $('#btn-settings').addEventListener('click', () => openSettings());
-$('#btn-auth').addEventListener('click', () => (S.ui.demo ? signIn() : signOut()));
+$('#btn-auth').addEventListener('click', () => (S.ui.demo ? signIn() : lock()));
+$('#set-signout').addEventListener('click', signOut);
 $('#preview-mode').addEventListener('change', (e) => { S.ui.previewMode = e.target.value; renderPreview(); });
 
 $('#set-encrypt').addEventListener('change', (e) => { $('#set-pass-wrap').hidden = !e.target.checked; });
 $('#set-cancel').addEventListener('click', () => $('#dlg-settings').close());
 $('#set-test').addEventListener('click', testConnection);
 $('#settings-form').addEventListener('submit', saveSettings);
-$('#set-clear').addEventListener('click', () => {
-  clearToken();
-  S.ui.token = '';
-  S.ui.readOnly = true;
-  $('#set-token').value = '';
-  $('#set-encrypt').checked = false;
-  setSettingsMsg('Token removed from this browser.', 'ok');
-  updateChrome();
-  location.reload();
-});
 $('#set-export').addEventListener('click', () => {
   if (!S.data) return;
   const blob = new Blob([`${JSON.stringify(S.data, null, 2)}\n`], { type: 'application/json' });
